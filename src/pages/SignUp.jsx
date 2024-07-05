@@ -2,11 +2,12 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { auth } from "../firebase.js";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [displayName, setDisplayName] = useState("");
 
   const navigate = useNavigate();
   const submitHandler = (e) => {
@@ -17,7 +18,18 @@ const SignUp = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
-        navigate("/signin");
+
+        // Update the user's profile with the display name
+        updateProfile(user, {
+          displayName: displayName,
+        })
+          .then(() => {
+            console.log("Profile updated successfully");
+            navigate("/signin");
+          })
+          .catch((error) => {
+            console.error("Error updating profile:", error);
+          });
       })
       .catch((error) => {
         const errorCode = error.code;
@@ -40,6 +52,17 @@ const SignUp = () => {
         />
         <form className="flex flex-col items-center  w-[100%] py-6 px-4">
           <h1 className="text-xl m-2">Create An Account</h1>
+          <div className="mb-4 w-full">
+            <input
+              type="text"
+              name="displayName"
+              required
+              value={displayName}
+              onChange={(e) => setDisplayName(e.target.value)}
+              className="w-full px-3 py-2 border rounded-lg"
+              placeholder="Full Name"
+            />
+          </div>
           <div className="mb-4 w-full">
             <input
               type="email"
