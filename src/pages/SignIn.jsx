@@ -19,7 +19,7 @@ const SignIn = () => {
         const user = userCredential.user;
         console.log(user);
         toast("Logged in successfully");
-        navigate("/dashboard");
+        navigate("/");
       })
       .catch((error) => {
         const errorCode = error.code;

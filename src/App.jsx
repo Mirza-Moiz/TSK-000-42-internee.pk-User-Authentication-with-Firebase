@@ -37,8 +37,8 @@ function App() {
   const router = createBrowserRouter(
     createRoutesFromElements(
       <>
-        <Route path="/dashboard" element={<MainLayout />}>
-          <Route path="/dashboard" element={<HomePage authUser={authUser} />} />
+        <Route path="/" element={<MainLayout />}>
+          <Route path="/" element={<HomePage authUser={authUser} />} />
         </Route>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />

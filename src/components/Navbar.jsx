@@ -99,7 +99,7 @@ const Navbar = () => {
 
   return (
     <nav className="fixed h-auto top-0 left-0 px-4 flex items-center justify-between min-h-14 w-screen bg-[#04962f] text-white font-semibold shadow-md">
-      <Link className="m-4" to="/dashboard">
+      <Link className="m-4" to="/">
         Pakistan&apos;s Virtual Internship Platform
       </Link>
       {authUser ? (
