@@ -19,7 +19,7 @@ const HomePage = ({ authUser }) => {
             <div className="flex items-center justify-center">
               <p className="mr-4">You are not signed in.</p>
               <Link
-                className="px-4 py-2  bg-[#04962f] text-white rounded"
+                className="text-center px-4 py-2 min-w-24  bg-[#04962f] text-white rounded"
                 to="/signin"
               >
                 Sign In

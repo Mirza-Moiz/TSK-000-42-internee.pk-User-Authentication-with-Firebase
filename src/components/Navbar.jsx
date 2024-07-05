@@ -188,7 +188,7 @@ const Navbar = () => {
         </div>
       ) : (
         <>
-          <Link className="m-4" to="/signin">
+          <Link className="m-4 w-20" to="/signin">
             Sign In
           </Link>
         </>

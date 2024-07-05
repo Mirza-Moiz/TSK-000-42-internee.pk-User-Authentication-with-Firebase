@@ -38,7 +38,7 @@ function App() {
     createRoutesFromElements(
       <>
         <Route path="/" element={<MainLayout />}>
-          <Route path="/" element={<HomePage authUser={authUser} />} />
+          <Route index element={<HomePage authUser={authUser} />} />
         </Route>
         <Route path="/signin" element={<SignIn />} />
         <Route path="/signup" element={<SignUp />} />
