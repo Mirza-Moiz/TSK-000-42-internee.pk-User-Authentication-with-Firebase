@@ -3,15 +3,22 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { auth } from "../firebase.js";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const SignUp = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
 
   const navigate = useNavigate();
   const submitHandler = (e) => {
     e.preventDefault();
+
+    if (password !== confirmPassword) {
+      toast("Passwords do not match");
+      return;
+    }
 
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
@@ -25,9 +32,10 @@ const SignUp = () => {
         })
           .then(() => {
             console.log("Profile updated successfully");
-            navigate("/signin");
+            toast("Account created successfully");
           })
           .catch((error) => {
+            toast("Error updating profile", error.message);
             console.error("Error updating profile:", error);
           });
       })
@@ -36,6 +44,7 @@ const SignUp = () => {
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
       });
+    navigate("/signin");
   };
   return (
     <div className="flex items-center justify-center h-screen">
@@ -81,7 +90,7 @@ const SignUp = () => {
               placeholder="name@email.com"
             />
           </div>
-          <div className="mb-4 w-full">
+          <div className=" w-full">
             <input
               type="password"
               id="password"
@@ -90,6 +99,18 @@ const SignUp = () => {
               onChange={(e) => setPassword(e.target.value)}
               required
               placeholder="Password"
+              className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
+            />
+          </div>
+          <div className="mb-4 w-full">
+            <input
+              type="password"
+              id="confirmPassword"
+              name="confirmPassword"
+              value={confirmPassword}
+              onChange={(e) => setConfirmPassword(e.target.value)}
+              required
+              placeholder="Confirm Password"
               className="shadow appearance-none border border-red rounded w-full py-2 px-3 text-gray-700 mb-3 leading-tight focus:outline-none focus:shadow-outline"
             />
           </div>

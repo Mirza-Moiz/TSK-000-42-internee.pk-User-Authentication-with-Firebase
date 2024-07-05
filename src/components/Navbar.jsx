@@ -14,6 +14,7 @@ import { IoMdPerson } from "react-icons/io";
 import { FaAngleDown } from "react-icons/fa";
 import { IoIosSettings } from "react-icons/io";
 import { MdPowerSettingsNew } from "react-icons/md";
+import { toast } from "react-toastify";
 
 const Navbar = () => {
   const [authUser, setAuthUser] = useState(null);
@@ -36,6 +37,7 @@ const Navbar = () => {
     signOut(auth)
       .then(() => {
         console.log("sign out successful");
+        toast("Logged out successfully");
       })
       .catch((error) => console.log(error));
   };
@@ -90,6 +92,7 @@ const Navbar = () => {
           });
       }
       setShowModal(false);
+      toast("Account updated successfully");
       setShowDropdown(false);
     }
   };

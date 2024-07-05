@@ -3,6 +3,7 @@ import { Link, useNavigate } from "react-router-dom";
 
 import { auth } from "../firebase.js";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { toast } from "react-toastify";
 
 const SignIn = () => {
   const [email, setEmail] = useState("");
@@ -17,11 +18,13 @@ const SignIn = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
+        toast("Logged in successfully");
         navigate("/dashboard");
       })
       .catch((error) => {
         const errorCode = error.code;
         const errorMessage = error.message;
+        toast("Invalid email or password");
         console.log(errorCode, errorMessage);
       });
   };
