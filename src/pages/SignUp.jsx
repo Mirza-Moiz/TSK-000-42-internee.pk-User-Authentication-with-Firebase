@@ -63,6 +63,7 @@ const SignUp = () => {
           <h1 className="text-xl m-2">Create An Account</h1>
           <div className="mb-4 w-full">
             <input
+              min={3}
               type="text"
               name="displayName"
               required
@@ -92,6 +93,7 @@ const SignUp = () => {
           </div>
           <div className=" w-full">
             <input
+              min={6}
               type="password"
               id="password"
               name="password"
@@ -104,6 +106,7 @@ const SignUp = () => {
           </div>
           <div className="mb-4 w-full">
             <input
+              min={6}
               type="password"
               id="confirmPassword"
               name="confirmPassword"

@@ -64,6 +64,7 @@ const SignIn = () => {
             </div>
             <div className="mb-4 w-full">
               <input
+                min={6}
                 type="password"
                 id="password"
                 name="password"

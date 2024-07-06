@@ -143,6 +143,7 @@ const Navbar = () => {
                       Full Name
                     </label>
                     <input
+                      min={3}
                       type="text"
                       value={displayName}
                       onChange={(e) => setDisplayName(e.target.value)}
@@ -155,6 +156,13 @@ const Navbar = () => {
                       type="email"
                       value={email}
                       onChange={(e) => setEmail(e.target.value)}
+                      pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}"
+                      onInvalid={(e) =>
+                        e.currentTarget.setCustomValidity(
+                          "Please enter a valid email address"
+                        )
+                      }
+                      onInput={(e) => e.currentTarget.setCustomValidity("")}
                       className="w-full px-3 py-2 border border-gray-300 rounded-md"
                     />
                   </div>
