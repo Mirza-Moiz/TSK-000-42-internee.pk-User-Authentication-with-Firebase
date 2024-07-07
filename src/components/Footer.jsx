@@ -14,7 +14,7 @@ const Footer = () => {
         </p>
         <a
           href="https://portfolio-moiz.vercel.app/"
-          className="font-semibold text-gray-500 hover:text-gray-700 transition-all ease-in-out duration-300"
+          className="font-semibold text-center m-2 text-gray-500 hover:text-gray-700 transition-all ease-in-out duration-300"
         >
           Moiz Nadeem
         </a>

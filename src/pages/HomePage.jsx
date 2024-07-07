@@ -27,6 +27,16 @@ const HomePage = ({ authUser }) => {
             </div>
           )}
         </div>
+        {authUser && (
+          <div
+            className="flex items-center justify-centerbg-white px-4 py-6 mx-4 my-8 text-lg rounded-lg"
+            style={{
+              boxShadow: "rgb(0 0 0 / 10%) 0px 0px 20px 10px",
+            }}
+          >
+            <h1 className=" text-3xl my-4 ">Protected Data</h1>
+          </div>
+        )}
       </div>
     </div>
   );
