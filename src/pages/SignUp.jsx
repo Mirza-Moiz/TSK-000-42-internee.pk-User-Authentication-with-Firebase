@@ -10,6 +10,7 @@ const SignUp = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [displayName, setDisplayName] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
   const submitHandler = (e) => {
@@ -25,7 +26,13 @@ const SignUp = () => {
         // Signed in
         const user = userCredential.user;
         console.log(user);
-
+        if (rememberMe) {
+          localStorage.setItem("email", email);
+          localStorage.setItem("password", password);
+        } else {
+          localStorage.removeItem("email");
+          localStorage.removeItem("password");
+        }
         // Update the user's profile with the display name
         updateProfile(user, {
           displayName: displayName,
@@ -44,7 +51,7 @@ const SignUp = () => {
         const errorMessage = error.message;
         console.log(errorCode, errorMessage);
       });
-    navigate("/signin");
+    navigate("/");
   };
   return (
     <div className="flex items-center justify-center h-screen">
@@ -122,8 +129,10 @@ const SignUp = () => {
               <input
                 type="checkbox"
                 name="remeber-me"
-                id=""
+                id="remember-me"
                 className="mr-2 leading-tight focus:outline-none focus:shadow-outline h-4 w-4"
+                checked={rememberMe}
+                onChange={(e) => setRememberMe(e.target.checked)}
               />
               <label
                 htmlFor="remeber-me"

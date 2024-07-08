@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { auth } from "../firebase.js";
@@ -11,18 +11,37 @@ import { toast } from "react-toastify";
 const SignIn = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [rememberMe, setRememberMe] = useState(false);
 
   const navigate = useNavigate();
+
+  useEffect(() => {
+    const storedEmail = localStorage.getItem("email");
+    const storedPassword = localStorage.getItem("password");
+    if (storedEmail && storedPassword) {
+      setEmail(storedEmail);
+      setPassword(storedPassword);
+      setRememberMe(true);
+    }
+  }, []);
 
   const submitHandler = (e) => {
     e.preventDefault();
 
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        // Signed in
         const user = userCredential.user;
         console.log(user);
         toast("Logged in successfully");
+
+        if (rememberMe) {
+          localStorage.setItem("email", email);
+          localStorage.setItem("password", password);
+        } else {
+          localStorage.removeItem("email");
+          localStorage.removeItem("password");
+        }
+
         navigate("/");
       })
       .catch((error) => {
@@ -104,12 +123,14 @@ const SignIn = () => {
               <div className="flex items-center ">
                 <input
                   type="checkbox"
-                  name="remeber-me"
-                  id=""
+                  name="remember-me"
+                  id="remember-me"
                   className="mr-2 leading-tight focus:outline-none focus:shadow-outline h-4 w-4"
+                  checked={rememberMe}
+                  onChange={(e) => setRememberMe(e.target.checked)}
                 />
                 <label
-                  htmlFor="remeber-me"
+                  htmlFor="remember-me"
                   className=" text-gray-500 font-semibold"
                 >
                   Remember Me
@@ -130,8 +151,9 @@ const SignIn = () => {
             >
               Forgot Password?
             </button>
+            <hr className="border-green-600  my-3 w-full " />
             <Link
-              className="inline-block align-baseline pt-4  text-md text-[#04962f] hover:text-[#32af57] transition-all ease-in-out duration-150"
+              className="inline-block align-baseline pt-2  text-md text-[#04962f] hover:text-[#32af57] transition-all ease-in-out duration-150"
               to="/signup"
             >
               <span className="text-black">Don&apos;t have an account? </span>
