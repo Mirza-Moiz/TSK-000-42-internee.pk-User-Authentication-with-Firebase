@@ -2,7 +2,10 @@ import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 import { auth } from "../firebase.js";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import { toast } from "react-toastify";
 
 const SignIn = () => {
@@ -10,6 +13,7 @@ const SignIn = () => {
   const [password, setPassword] = useState("");
 
   const navigate = useNavigate();
+
   const submitHandler = (e) => {
     e.preventDefault();
 
@@ -28,6 +32,24 @@ const SignIn = () => {
         console.log(errorCode, errorMessage);
       });
   };
+
+  const handleForgotPassword = () => {
+    if (!email) {
+      toast("Please enter your email address");
+      return;
+    }
+    sendPasswordResetEmail(auth, email)
+      .then(() => {
+        toast("Password reset email sent!");
+      })
+      .catch((error) => {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        toast("Error sending password reset email");
+        console.log(errorCode, errorMessage);
+      });
+  };
+
   return (
     <>
       <div className="flex items-center justify-center h-screen">
@@ -42,7 +64,10 @@ const SignIn = () => {
             src="./images/logo.png"
             alt="Internee.pk"
           />
-          <form className="flex flex-col items-center  w-[100%] py-6 px-4">
+          <form
+            className="flex flex-col items-center  w-[100%] py-6 px-4"
+            onSubmit={submitHandler}
+          >
             <h1 className="text-xl m-2">Log In</h1>
             <div className="mb-4 w-full">
               <input
@@ -92,13 +117,19 @@ const SignIn = () => {
               </div>
               <button
                 className="bg-[#04962f] hover:bg-[#32af57]  text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline transition-all ease-in-out duration-150"
-                type="button"
+                type="submit"
                 disabled={!email || !password}
-                onClick={submitHandler}
               >
                 Sign In
               </button>
             </div>
+            <button
+              type="button"
+              className="inline-block align-baseline pt-4 text-md text-[#04962f] hover:text-[#32af57] transition-all ease-in-out duration-150"
+              onClick={handleForgotPassword}
+            >
+              Forgot Password?
+            </button>
             <Link
               className="inline-block align-baseline pt-4  text-md text-[#04962f] hover:text-[#32af57] transition-all ease-in-out duration-150"
               to="/signup"
